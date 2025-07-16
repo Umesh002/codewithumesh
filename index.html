@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manoj Mart</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body { background: #000; color: #fff; font-family: Arial, sans-serif; margin: 0; }
+    .navbar-brand { color: #ff008c !important; font-weight: bold; font-size: 24px; }
+    .nav-link { color: #fff !important; }
+    .nav-link:hover { color: #ff008c !important; }
+    .logo-container { background: #fff; display: flex; justify-content: center; align-items: center; height: 150px; margin: 30px auto; max-width: 90%; border-radius: 10px; }
+    .logo-inner { display: flex; align-items: center; padding: 10px 30px; }
+    .logo-M { color: #0f51d5; font-size: 70px; font-weight: bold; position: relative; }
+    .logo-M::after { content: ""; position: absolute; left: 28px; top: -10px; width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-bottom: 30px solid #ff008c; transform: rotate(45deg); }
+    .manoj-box { background-color: #ff008c; color: white; padding: 15px 25px; margin-left: 15px; border-radius: 5px; }
+    .manoj-box h1 { margin: 0; font-size: 32px; font-weight: bold; }
+    .manoj-box p { margin: 0; font-size: 18px; font-weight: bold; }
+    .product-card img { height: 250px; object-fit: cover; transition: 0.3s ease; }
+    .variant-thumbs { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 10px; }
+    .variant-thumbs img { width: 40px; height: 40px; object-fit: cover; border-radius: 4px; cursor: pointer; border: 2px solid transparent; }
+    .variant-thumbs img:hover { border-color: #ff008c; }
+    footer { background: black; color:white; padding: 15px 0; text-align: center; margin-top: 30px; }
+    @media (max-width: 600px) {
+      .logo-M { font-size: 50px; }
+      .manoj-box h1 { font-size: 24px; }
+      .manoj-box p { font-size: 14px; }
+      .variant-thumbs img { width: 30px; height: 30px; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Manoj Mart</a>
+      <form class="d-flex ms-auto w-50" role="search" onsubmit="return false;">
+        <input class="form-control me-2" type="search" placeholder="Search Products..." aria-label="Search" id="searchBar" />
+      </form>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#products">Products</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+           <li class="nav-item"><a class="nav-link" href="#order">My Order</a></li>
+          <li class="nav-item"><a class="nav-link" href="#support">Customer Support</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+
+  <div class="logo-container">
+    <div class="logo-inner">
+      <div class="logo-M">M</div>
+      <div class="manoj-box">
+        <h1>MANOJ</h1>
+        <p style="margin-left: 70%; margin-bottom: 2%">MART</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" id="products">
+    <h2 class="text-center text-white mb-4">🛒 Our Products</h2>
+    <div class="row g-4" id="product-list"></div>
+  </div>
+
+  <div class="container mt-5 text-center" id="about">
+    <h3>📖 About Us</h3>
+    <p>Manoj Mart ek vishwasniya online kapdon ki dukan hai jahan aapko milte hain fashion ke sabse naye designs, affordable daam par.</p>
+  </div>
+
+  <div class="container mt-5 text-center" id="contact">
+    <h3>📞 Contact Us</h3>
+    <p>Call/WhatsApp: <strong>+91-6390704461</strong></p>
+    <p>Email: <strong>support@manojmart.com</strong></p>
+  </div>
+
+  <div class="container mt-5 text-white" id="order">
+    <h3 class="text-center mb-4">📝 Place Your Order</h3>
+    <form onsubmit="return sendOrder(event)">
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="product" class="form-label">Product Name</label>
+          <input type="text" class="form-control" id="product" required readonly />
+        </div>
+        <div class="col-md-6">
+          <label for="price" class="form-label">Price</label>
+          <input type="text" class="form-control" id="price" required readonly />
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="quantity" class="form-label">Quantity</label>
+          <input type="number" class="form-control" id="quantity" min="1" value="1" required />
+        </div>
+        <div class="col-md-6">
+          <label for="name" class="form-label">Your Name</label>
+          <input type="text" class="form-control" id="name" required />
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label for="phone" class="form-label">Phone Number</label>
+          <input type="tel" class="form-control" id="phone" required />
+        </div>
+        <div class="col-md-6">
+          <label for="address" class="form-label">Address</label>
+          <textarea class="form-control" id="address" rows="1" required></textarea>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Payment Method</label><br />
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="payment" id="cod" value="Cash on Delivery" checked />
+          <label class="form-check-label" for="cod">Cash on Delivery</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="payment" id="phonepe" value="PhonePe / Google Pay" />
+          <label class="form-check-label" for="phonepe">PhonePe / Google Pay</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="payment" id="card" value="ATM Card / Net Banking" />
+          <label class="form-check-label" for="card">ATM Card / Net Banking</label>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-success w-100">Send Order on WhatsApp</button>
+    </form>
+    <!-- <h1>📝 CUSTOMER SUPPORT FORM</h1> -->
+  <div class="container mt-5" id="support">
+    <h3 class="text-center mb-4">🤝 Customer Support</h3>
+    <form onsubmit="submitSupport(event)">
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <input type="text" class="form-control" id="supportName" placeholder="Your Name" required />
+        </div>
+        <div class="col-md-6">
+          <input type="tel" class="form-control" id="supportPhone" placeholder="Mobile Number" required />
+        </div>
+      </div>
+      <textarea class="form-control mb-3" id="supportMessage" rows="3" placeholder="Your Problem / Message" required></textarea>
+      <button type="submit" class="btn btn-warning w-100">Submit</button>
+    </form>
+  </div>
+
+  <!-- ORDER SUMMARY -->
+  <div class="container order-summary text-white" id="orderSummary" style="display:none;">
+    <h4>📦 Your Orders</h4>
+    <ul id="orderList"></ul>
+  </div>
+    
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Manoj Mart. All rights reserved.</p>
+    <p>Follow us on Instagram | Facebook | WhatsApp</p>
+  </footer>
+
+  <script>
+    const products = [
+      {
+        name: "Shirt 1",
+        price: 899,
+        image: "assest/gallary/1.jpg",
+        variants: [
+          "assest/gallary/2.jpg",
+          "assest/gallary/3.jpg",
+          "assest/gallary/4.jpg",
+          "assest/gallary/5.jpg",
+           "assest/gallary/6.jpg",
+        ]
+        
+
+      },
+      {
+        name: "Shirt 2",
+        price: 899,
+        image: "assest/gallary/1.jpg",
+        variants: [
+          "assest/gallary/2.jpg",
+          "assest/gallary/3.jpg",
+          "assest/gallary/4.jpg",
+          "assest/gallary/5.jpg",
+           "assest/gallary/6.jpg",
+        ] 
+      },
+      // { name: "Shirt 2", price: 899, image: "images/shirt2.jpg" },
+      {
+         name: "Shirt 3", price: 899, image: "assest/gallary/2.jpg",variants:[ 
+          "assest/gallary/2.jpg",
+          "assest/gallary/3.jpg",
+          "assest/gallary/4.jpg",
+          "assest/gallary/5.jpg",
+           "assest/gallary/6.jpg",
+        ] },
+      { name: "Shirt 4", price: 899, image: "assest/gallary/3.jpg",variants: [
+          "assest/gallary/2.jpg",
+          "assest/gallary/3.jpg",
+          "assest/gallary/4.jpg",
+          "assest/gallary/5.jpg",
+           "assest/gallary/6.jpg",
+        ]  },
+      { name: "Shirt 5", price: 899, image:"assest/gallary/3.jpg",variants: [
+          "assest/gallary/2.jpg",
+          "assest/gallary/3.jpg",
+          "assest/gallary/4.jpg",
+          "assest/gallary/5.jpg",
+           "assest/gallary/6.jpg",
+        ]  },
+      { name: "Shirt 6", price: 899, image: "assest/gallary/3.jpg",variants: [
+          "assest/gallary/2.jpg",
+          "assest/gallary/3.jpg",
+          "assest/gallary/4.jpg",
+          "assest/gallary/5.jpg",
+           "assest/gallary/6.jpg",
+        ]  },
+      { name: "T-Shirt 1", price: 1099, image: "assest/gallary/3.jpg",variants: [
+          "assest/gallary/2.jpg",
+          "assest/gallary/3.jpg",
+          "assest/gallary/4.jpg",
+          "assest/gallary/5.jpg",
+           "assest/gallary/6.jpg",
+        ]  },
+      { name: "T-Shirt 2", price: 1099, image: "assest/gallary/4.jpg",variants: [
+          "assest/gallary/2.jpg",
+          "assest/gallary/3.jpg",
+          "assest/gallary/4.jpg",
+          "assest/gallary/5.jpg",
+           "assest/gallary/6.jpg",
+        ]  },
+      { name: "T-Shirt 3", price: 1099, image:  "assest/gallary/4.jpg",variants: [
+          "assest/gallary/2.jpg",
+          "assest/gallary/3.jpg",
+          "assest/gallary/4.jpg",
+          "assest/gallary/5.jpg",
+           "assest/gallary/6.jpg",
+        ]  },
+      { name: "T-Shirt 4", price: 1099, image:  "assest/gallary/4.jpg",variants: [
+          "assest/gallary/2.jpg",
+          "assest/gallary/3.jpg",
+          "assest/gallary/4.jpg",
+          "assest/gallary/5.jpg",
+           "assest/gallary/6.jpg",
+        ]  },
+      { name: "T-Shirt 5", price: 1099, image:  "assest/gallary/4.jpg",variants: [
+          "assest/gallary/2.jpg",
+          "assest/gallary/3.jpg",
+          "assest/gallary/4.jpg",
+          "assest/gallary/5.jpg",
+           "assest/gallary/6.jpg",
+        ]  },
+      { name: "T-Shirt 6", price: 1099, image:  "assest/gallary/4.jpg",variants: [
+          "assest/gallary/2.jpg",
+          "assest/gallary/3.jpg",
+          "assest/gallary/4.jpg",
+          "assest/gallary/5.jpg",
+           "assest/gallary/6.jpg",
+        ]  },
+      { name: "Jeans 1", price: 1099, image: "assest/gallary/5.jpg",variants: [
+          "assest/gallary/2.jpg",
+          "assest/gallary/3.jpg",
+          "assest/gallary/4.jpg",
+          "assest/gallary/5.jpg",
+           "assest/gallary/6.jpg",
+        ]  },
+      { name: "Jeans 2", price: 1099, image: "assest/gallary/5.jpg",variants: [
+          "assest/gallary/2.jpg",
+          "assest/gallary/3.jpg",
+          "assest/gallary/4.jpg",
+          "assest/gallary/5.jpg",
+           "assest/gallary/6.jpg",
+        ]  },
+      { name: "Jeans 3", price: 1099, image:  "assest/gallary/5.jpg",variants: [
+          "assest/gallary/2.jpg",
+          "assest/gallary/3.jpg",
+          "assest/gallary/4.jpg",
+          "assest/gallary/5.jpg",
+           "assest/gallary/6.jpg",
+        ]  },
+      { name: "Jeans 4", price: 1099, image:  "assest/gallary/5.jpg",variants: [
+          "assest/gallary/2.jpg",
+          "assest/gallary/3.jpg",
+          "assest/gallary/4.jpg",
+          "assest/gallary/5.jpg",
+           "assest/gallary/6.jpg",
+        ]  },
+      { name: "Jeans 5", price: 1099, image:  "assest/gallary/5.jpg",variants: [
+          "assest/gallary/2.jpg",
+          "assest/gallary/3.jpg",
+          "assest/gallary/4.jpg",
+          "assest/gallary/5.jpg",
+           "assest/gallary/6.jpg",
+        ]  },
+      { name: "Jeans 6", price: 1099, image:  "assest/gallary/5.jpg",variants: [
+          "assest/gallary/2.jpg",
+          "assest/gallary/3.jpg",
+          "assest/gallary/4.jpg",
+          "assest/gallary/5.jpg",
+           "assest/gallary/6.jpg",
+        ]  },
+      { name: "Kurti 1", price: 699, image: "assest/gallary/1.jpg",variants: [
+          "assest/gallary/2.jpg",
+          "assest/gallary/3.jpg",
+          "assest/gallary/4.jpg",
+          "assest/gallary/5.jpg",
+           "assest/gallary/6.jpg",
+        ]  },
+      { name: "Kurti 2", price: 799, image: "assest/gallary/1.jpg",variants: [
+          "assest/gallary/2.jpg",
+          "assest/gallary/3.jpg",
+          "assest/gallary/4.jpg",
+          "assest/gallary/5.jpg",
+           "assest/gallary/6.jpg",
+        ]  },
+      { name: "Kurti 3", price: 699, image: "assest/gallary/1.jpg",variants: [
+          "assest/gallary/2.jpg",
+          "assest/gallary/3.jpg",
+          "assest/gallary/4.jpg",
+          "assest/gallary/5.jpg",
+           "assest/gallary/6.jpg",
+        ]  },
+      { name: "Kurti 4", price: 699, image:"assest/gallary/1.jpg",variants: [
+          "assest/gallary/2.jpg",
+          "assest/gallary/3.jpg",
+          "assest/gallary/4.jpg",
+          "assest/gallary/5.jpg",
+           "assest/gallary/6.jpg",
+        ]  },
+      { name: "Kurti 5", price: 899, image:"assest/gallary/1.jpg",variants: [
+          "assest/gallary/2.jpg",
+          "assest/gallary/3.jpg",
+          "assest/gallary/4.jpg",
+          "assest/gallary/5.jpg",
+           "assest/gallary/6.jpg",
+        ]  },
+      { name: "Kurti 6", price: 899, image: "assest/gallary/1.jpg",variants: [
+          "assest/gallary/2.jpg",
+          "assest/gallary/3.jpg",
+          "assest/gallary/4.jpg",
+          "assest/gallary/5.jpg",
+           "assest/gallary/6.jpg",
+        ]  },
+      { name: "Lehenga 1", price: 899, image: "assest/gallary/2.jpg",variants: [
+          "assest/gallary/2.jpg",
+          "assest/gallary/3.jpg",
+          "assest/gallary/4.jpg",
+          "assest/gallary/5.jpg",
+           "assest/gallary/6.jpg",
+        ]  },
+      { name: "Lehenga 2", price: 899, image:"assest/gallary/2.jpg",variants: [
+          "assest/gallary/2.jpg",
+          "assest/gallary/3.jpg",
+          "assest/gallary/4.jpg",
+          "assest/gallary/5.jpg",
+           "assest/gallary/6.jpg",
+        ]  },
+      { name: "Lehenga 3", price: 999, image: "assest/gallary/2.jpg",variants: [
+          "assest/gallary/2.jpg",
+          "assest/gallary/3.jpg",
+          "assest/gallary/4.jpg",
+          "assest/gallary/5.jpg",
+           "assest/gallary/6.jpg",
+        ]  },
+      { name: "Lehenga 4", price: 1199, image: "assest/gallary/2.jpg",variants: [
+          "assest/gallary/2.jpg",
+          "assest/gallary/3.jpg",
+          "assest/gallary/4.jpg",
+          "assest/gallary/5.jpg",
+           "assest/gallary/6.jpg",
+        ]  },
+      { name: "Lehenga 5", price: 899, image: "assest/gallary/2.jpg",variants: [
+          "assest/gallary/2.jpg",
+          "assest/gallary/3.jpg",
+          "assest/gallary/4.jpg",
+          "assest/gallary/5.jpg",
+           "assest/gallary/6.jpg",
+        ]  },
+      { name: "Lehenga 6", price: 1099, image: "assest/gallary/3.jpg",variants: [
+          "assest/gallary/2.jpg",
+          "assest/gallary/3.jpg",
+          "assest/gallary/4.jpg",
+          "assest/gallary/5.jpg",
+           "assest/gallary/6.jpg",
+        ]  }
+      // Add more products and variants like above
+    ];
+
+    const container = document.getElementById("product-list");
+    products.forEach((item, i) => {
+      const col = document.createElement("div");
+      col.className = "col-md-4 col-sm-6 col-12 product-card";
+
+      let variantHTML = "";
+      if (item.variants) {
+        variantHTML = `<div class="variant-thumbs">`;
+        item.variants.forEach(variant => {
+          variantHTML += `<img src="${variant}" onclick="document.getElementById('main-img-${i}').src='${variant}'" alt="variant">`;
+        });
+        variantHTML += `</div>`;
+      }
+
+      col.innerHTML = `
+        <div class="card">
+          <img id="main-img-${i}" src="${item.image}" class="card-img-top" alt="${item.name}" />
+          <div class="card-body">
+            <h5 class="card-title">${item.name}</h5>
+            <p class="card-text">₹${item.price}</p>
+            ${variantHTML}
+            <a href="#order" class="btn btn-primary mt-3 w-100" onclick="fillOrder('${item.name}', ${item.price})">Buy Now</a>
+          </div>
+        </div>
+      `;
+      container.appendChild(col);
+    });
+
+    function fillOrder(name, price) {
+      document.getElementById("product").value = name;
+      document.getElementById("price").value = price;
+      document.getElementById("quantity").value = 1;
+    }
+
+    function sendOrder(event) {
+      event.preventDefault();
+      const product = document.getElementById("product").value;
+      const price = document.getElementById("price").value;
+      const quantity = document.getElementById("quantity").value;
+      const name = document.getElementById("name").value;
+      const phone = document.getElementById("phone").value;
+      const address = document.getElementById("address").value;
+      const payment = document.querySelector('input[name="payment"]:checked').value;
+      const total = price * quantity;
+
+      const message = `*New Order Received*%0A📦 *Product:* ${product}%0A🔢 *Quantity:* ${quantity}%0A💲 *Price per item:* ₹${price}%0A📈 *Total:* ₹${total}%0A👤 *Name:* ${name}%0A📞 *Phone:* ${phone}%0A🏠 *Address:* ${address}%0A💳 *Payment:* ${payment}`;
+
+      const whatsappURL = `https://wa.me/916390704461?text=${message}`;
+      window.open(whatsappURL, "_blank");
+    }
+     function submitSupport(event) {
+      event.preventDefault();
+      const name = document.getElementById("supportName").value;
+      const phone = document.getElementById("supportPhone").value;
+      const message = document.getElementById("supportMessage").value;
+      const supportMessage = `📩 *Customer Support Request*%0A👤 *Name:* ${name}%0A📞 *Phone:* ${phone}%0A📝 *Message:* ${message}`;
+      const url = `https://wa.me/916390704461?text=${supportMessage}`;
+      window.open(url, "_blank");
+
+       const whatsappURL = `https://wa.me/916390704461?text=${message}`;
+      window.open(whatsappURL, "_blank");
+    }
+
+    // let orderItems = [];
+
+    function searchProducts() {
+      const query = document.getElementById("searchBar").value.toLowerCase();
+      const cards = document.querySelectorAll(".product-card");
+      cards.forEach(card => {
+        const title = card.querySelector(".card-title").textContent.toLowerCase();
+        card.style.display = title.includes(query) ? "block" : "none";
+      });
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
